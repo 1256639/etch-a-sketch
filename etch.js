@@ -1,6 +1,21 @@
 const container = document.getElementById('container');
 const resizeBtn = document.getElementById('resizeBtn');
+const blackBtn = document.getElementById('blackBtn');
+const rainbowBtn = document.getElementById('rainbowBtn');
 const CONTAINER_SIZE = 480;
+
+let currentMode = 'black';
+
+function setMode(mode) {
+    currentMode = mode;
+}
+
+blackBtn.addEventListener('click', function(){
+    setMode('black');
+});
+rainbowBtn.addEventListener('click', function(){
+    setMode('rainbow');
+});
 
 function makeGrid(size){
     while(container.firstChild){
@@ -18,10 +33,21 @@ function makeGrid(size){
         square.style.width = squareSize + "px";
         square.style.height = squareSize + "px";
         square.addEventListener('mouseover', function(){
-            square.style.backgroundColor = '#222';
+            if (currentMode === 'black'){
+                square.style.backgroundColor = '#222'
+            } else if (currentMode === 'rainbow'){
+                square.style.backgroundColor = getRandomColor();
+            }         
         });
         container.appendChild(square);
     }
+}
+
+function getRandomColor(){
+    const a = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    const c = Math.floor(Math.random() * 256);
+    return 'rgb(' + a + ',' + b + ',' + c +')';
 }
 
 makeGrid(16);
