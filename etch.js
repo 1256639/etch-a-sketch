@@ -1,3 +1,4 @@
+// References to DOM elements and buttons
 const container = document.getElementById('container');
 const resizeBtn = document.getElementById('resizeBtn');
 const blackBtn = document.getElementById('blackBtn');
@@ -7,12 +8,15 @@ const eraseBtn = document.getElementById('eraseBtn');
 const clearBtn = document.getElementById('clearBtn');
 const CONTAINER_SIZE = 480;
 
+// Current drawing mode
 let currentMode = 'black';
 
+// Set the current drawing mode
 function setMode(mode) {
     currentMode = mode;
 }
 
+// Event listeners to change modes 
 blackBtn.addEventListener('click', function(){
     setMode('black');
 });
@@ -25,24 +29,33 @@ gradientBtn.addEventListener('click', function(){
 eraseBtn.addEventListener('click', function(){
     setMode('erase');
 });
+
+// Clear button resets all squares to their initial state
 clearBtn.addEventListener('click', function(){
     const squares = container.querySelectorAll('.square');
     squares.forEach(square => {
-        square.style.backgroundColor = '#222'; // match initial
+        square.style.backgroundColor = '#222';
         square.style.opacity = 0; 
     });
 });
 
+// Create the grid
+// @param {number} size = Number of squares per row/column
 function makeGrid(size){
+
+    // Removes any existing grid squares
     while(container.firstChild){
         container.removeChild(container.firstChild);
     }
 
+    // Set container styles for the grid
     container.style.display = 'flex';
     container.style.flexWrap = 'wrap';
     
+    // Calculates each square's size
     const squareSize = CONTAINER_SIZE / size;
 
+    // Creates the squares
     for (let i = 0; i < size * size; i++){
         const square = document.createElement('div');
         square.classList.add('square');
@@ -51,7 +64,7 @@ function makeGrid(size){
         square.style.backgroundColor = '#222';
         square.style.opacity = 0;
 
-
+        // Drawing behavior on mouseover
         square.addEventListener('mouseover', function(){
             if (currentMode === 'black'){
                 square.style.backgroundColor = '#222';
@@ -78,6 +91,8 @@ function makeGrid(size){
     }
 }
 
+// Generates a random RBG string
+// @returns {string} = An RGB color string
 function getRandomColor(){
     const a = Math.floor(Math.random() * 256);
     const b = Math.floor(Math.random() * 256);
@@ -85,8 +100,10 @@ function getRandomColor(){
     return 'rgb(' + a + ',' + b + ',' + c +')';
 }
 
+// Initialize the grid with a default size of 16x16
 makeGrid(16);
 
+// Handles the set grid size button
 resizeBtn.addEventListener('click', function(){
     let newSize = prompt("Enter a size between 1 and 100:", 16);
     newSize = Number(newSize);
