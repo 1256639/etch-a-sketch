@@ -14,3 +14,11 @@
     border: 1px solide #eee;
     background: #f0f0f0;
 }
+
+.top-center {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
