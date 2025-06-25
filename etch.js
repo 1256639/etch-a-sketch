@@ -2,6 +2,7 @@ const container = document.getElementById('container');
 const resizeBtn = document.getElementById('resizeBtn');
 const blackBtn = document.getElementById('blackBtn');
 const rainbowBtn = document.getElementById('rainbowBtn');
+const gradientBtn = document.getElementById('gradientBtn');
 const CONTAINER_SIZE = 480;
 
 let currentMode = 'black';
@@ -16,6 +17,9 @@ blackBtn.addEventListener('click', function(){
 rainbowBtn.addEventListener('click', function(){
     setMode('rainbow');
 });
+gradientBtn.addEventListener('click', function(){
+    setMode('gradient');
+})
 
 function makeGrid(size){
     while(container.firstChild){
@@ -32,11 +36,25 @@ function makeGrid(size){
         square.classList.add('square');
         square.style.width = squareSize + "px";
         square.style.height = squareSize + "px";
+
+
         square.addEventListener('mouseover', function(){
             if (currentMode === 'black'){
-                square.style.backgroundColor = '#222'
+                square.style.backgroundColor = '#222';
+                square.style.opacity = '1';
             } else if (currentMode === 'rainbow'){
                 square.style.backgroundColor = getRandomColor();
+                square.opacity = '1';
+            } else if (currentMode === 'gradient'){
+                let currentOpacity = parseFloat(square.style.opacity) || 0;
+                if (currentOpacity <1) {
+                    currentOpacity += 0.1;
+                    if (currentOpacity > 1) {
+                        currentOpacity = 1;
+                    }
+                    square.style.backgroundColor = '#222';
+                    square.style.opacity = currentOpacity;
+                }
             }         
         });
         container.appendChild(square);
