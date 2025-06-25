@@ -3,6 +3,8 @@ const resizeBtn = document.getElementById('resizeBtn');
 const blackBtn = document.getElementById('blackBtn');
 const rainbowBtn = document.getElementById('rainbowBtn');
 const gradientBtn = document.getElementById('gradientBtn');
+const eraseBtn = document.getElementById('eraseBtn');
+const clearBtn = document.getElementById('clearBtn');
 const CONTAINER_SIZE = 480;
 
 let currentMode = 'black';
@@ -19,7 +21,17 @@ rainbowBtn.addEventListener('click', function(){
 });
 gradientBtn.addEventListener('click', function(){
     setMode('gradient');
-})
+});
+eraseBtn.addEventListener('click', function(){
+    setMode('erase');
+});
+clearBtn.addEventListener('click', function(){
+    const squares = container.querySelectorAll('.square');
+    squares.forEach(square => {
+        square.style.backgroundColor = '#222'; // match initial
+        square.style.opacity = 0; 
+    });
+});
 
 function makeGrid(size){
     while(container.firstChild){
@@ -36,6 +48,8 @@ function makeGrid(size){
         square.classList.add('square');
         square.style.width = squareSize + "px";
         square.style.height = squareSize + "px";
+        square.style.backgroundColor = '#222';
+        square.style.opacity = 0;
 
 
         square.addEventListener('mouseover', function(){
@@ -44,7 +58,7 @@ function makeGrid(size){
                 square.style.opacity = '1';
             } else if (currentMode === 'rainbow'){
                 square.style.backgroundColor = getRandomColor();
-                square.opacity = '1';
+                square.style.opacity = '1';
             } else if (currentMode === 'gradient'){
                 let currentOpacity = parseFloat(square.style.opacity) || 0;
                 if (currentOpacity <1) {
@@ -55,7 +69,10 @@ function makeGrid(size){
                     square.style.backgroundColor = '#222';
                     square.style.opacity = currentOpacity;
                 }
-            }         
+            } else if (currentMode === 'erase'){
+                square.style.backgroundColor = '#fff';
+                square.style.opacity = 1;
+            }       
         });
         container.appendChild(square);
     }

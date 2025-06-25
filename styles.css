@@ -1,3 +1,19 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fafafa;
+}
+
+.title {
+    text-align: center;
+    font-size: 3rem;
+    margin-top: 40px;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    color: #222;
+    font-family: 'Arial Black', Arial, sans-serif;
+}
+
 #container {
     display: flex;
     flex-wrap: wrap;
@@ -5,6 +21,7 @@
     height: 480px;
     border: 2px solid #888;
     margin: 40px auto;
+    background: #fff;
 }
 
 .square {
@@ -12,14 +29,28 @@
     width: 30px;
     height: 30px;
     border: 1px solide #eee;
-    background: #f0f0f0;
+    background: #fff;
 }
 
-.top-center {
+.button-row {
     width: 100%;
     display: flex;
     justify-content: center;
     gap: 10px;
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+button {
+    font-size: 1.1rem;
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: 1px solid #aaa;
+    background: #eee;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+button:hover {
+    background: #222;
+    color: #fff;
 }
