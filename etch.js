@@ -11,6 +11,9 @@ const CONTAINER_SIZE = 480;
 // Current drawing mode
 let currentMode = 'black';
 
+// Only allow drawing if mouse press originated in the grid
+let isDrawing = false;
+
 // Set the current drawing mode
 function setMode(mode) {
     currentMode = mode;
@@ -30,6 +33,21 @@ eraseBtn.addEventListener('click', function(){
     setMode('erase');
 });
 
+// Start drawing only if mousedown on the grid
+container.addEventListener('mousedown', function(e){
+    if (e.button === 0) {
+        isDrawing = true;
+    }
+});
+
+// Always stop drawing when mouseup anywhere
+document.addEventListener('mouseup', function(){
+    isDrawing = false;
+});
+
+// Prevents unwanted dragging
+container.addEventListener('dragstart', function(e) { e.preventDefault(); });
+
 // Clear button resets all squares to their initial state
 clearBtn.addEventListener('click', function(){
     const squares = container.querySelectorAll('.square');
@@ -42,7 +60,6 @@ clearBtn.addEventListener('click', function(){
 // Create the grid
 // @param {number} size = Number of squares per row/column
 function makeGrid(size){
-
     // Removes any existing grid squares
     while(container.firstChild){
         container.removeChild(container.firstChild);
@@ -64,8 +81,7 @@ function makeGrid(size){
         square.style.backgroundColor = '#222';
         square.style.opacity = 0;
 
-        // Drawing behavior on mouseover
-        square.addEventListener('mouseover', function(){
+        function drawSquare() {
             if (currentMode === 'black'){
                 square.style.backgroundColor = '#222';
                 square.style.opacity = '1';
@@ -86,6 +102,15 @@ function makeGrid(size){
                 square.style.backgroundColor = '#fff';
                 square.style.opacity = 1;
             }       
+        }
+
+        // Draw on mousedown (single click)
+        square.addEventListener('mousedown', function(e){
+            if (e.button === 0) drawSquare();
+        });
+        // Draw on drag-over only if drawing started in grid
+        square.addEventListener('mouseover', function(e){
+            if (isDrawing) drawSquare();
         });
         container.appendChild(square);
     }
