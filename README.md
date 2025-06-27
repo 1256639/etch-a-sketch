@@ -1,7 +1,6 @@
 # Etch-a-Sketch
 
-[**Live Demo**](http://1256639.github.io/etch-a-sketch) <br>
-http://1256639.github.io/etch-a-sketch
+[**Live Demo**](http://1256639.github.io/etch-a-sketch)
 
 ---
 
